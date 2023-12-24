@@ -1,0 +1,218 @@
+---
+title: "STAT497 Homework-2"
+author: "Batuhan SAYLAM ID:2429264"
+date: "2023-11-29"
+output:
+  html_document: default
+  pdf_document: default
+---
+Q2) \
+a) \
+
+```{r}
+library(AER)
+data("USMacroSWM")
+data=na.omit(USMacroSWM[,"production"])
+```
+```{r}
+
+plot(data)
+
+```
+```{r}
+acf(data, na.action = na.pass)
+
+```
+```{r}
+pacf(data, na.action = na.pass)
+
+```
+\
+\
+The first plot shows us that the process is not stationary since there exists trend line. 
+ACF shows slow decay so this is indicator of nonstationary.
+Partial ACF show us that only 1st lag is significant in PACF. 
+\
+\
+\
+b) 
+\
+```{r}
+library(forecast)
+lambda <- BoxCox.lambda(data)
+trans<-BoxCox(data,lambda)
+plot(trans)
+```
+```{r}
+
+acf(trans, na.action = na.pass)
+```
+
+```{r}
+pacf(trans, na.action = na.pass)
+```
+\
+\
+The first plot shows us that the process is not stationary since there exists trend line. 
+ACF shows slow decay so this is indicator of nonstationary.
+Partial ACF show us that only 1st lag is significant in PACF.
+
+\
+\
+c) \
+```{r}
+library(pdR)
+out<-HEGY.test(wts=trans, itsd=c(1,1,0), regvar=0, selectlags=list(mode="signf", Pmax=NULL))
+out$stats
+```
+\
+\
+In this output, we will use p value of tpi_1 for regular unit root and use the p value of Fpi_11:12 for testing seasonal unit root since we have monthly data. Also, the system has a regular unit root since p-value of tpi_1 is greater than 0.05. However, does not have a seasonal unit root since p-value of Fpi_11:12 is less than 0.05. 
+\
+\
+
+
+```{r}
+out<-HEGY.test(wts=diff(trans), itsd=c(1,1,0), regvar=0, selectlags=list(mode="signf", Pmax=NULL))
+out$stats
+```
+\
+\
+The differenced system has no regular unit root since p-value of tpi_1 is less than 0.05.
+\
+\
+\
+d)
+\
+
+```{r}
+
+acf(diff(trans), na.action = na.pass)
+```
+
+```{r}
+pacf(diff(trans), na.action = na.pass)
+
+```
+\
+SARIMA(3,1,0)(1,0,0)[12] or SARIMA(3,1,4)(1,0,0)[12] 
+\
+
+
+
+Q3)
+
+a)\
+```{r}
+data("UKgas")
+data=na.omit(UKgas)
+plot(data)
+```
+
+```{r}
+acf(data, na.action = na.pass)
+```
+
+```{r}
+pacf(data, na.action = na.pass)
+```
+\
+\
+The first plot shows us that the process is not stationary since there exists trend line and seasonal behaviour. 
+ACF shows linear decay on seasonal lags (4,8,12,16,...) so this is indicator of nonstationary.
+Partial ACF show us that only 4th lag is significant in PACF. 
+\
+\
+b)\
+```{r}
+lambda <- BoxCox.lambda(data)
+trans<-BoxCox(data,lambda)
+plot(trans)
+```
+
+```{r}
+
+acf(trans, na.action = na.pass)
+```
+
+```{r}
+pacf(trans, na.action = na.pass)
+```
+\
+\
+The first plot shows us that the process is not stationary since there exists trend line and seasonal behaviour. 
+ACF shows linear decay on seasonal lags (4,8,12,16,...) so this is indicator of nonstationary.
+Partial ACF show us that only 1st lag is significant in PACF.
+\
+\
+\
+c) \
+```{r}
+library(pdR)
+out<-HEGY.test(wts=trans, itsd=c(1,1,0), regvar=0, selectlags=list(mode="signf", Pmax=NULL))
+out$stats
+```
+\
+\
+In this output, we will use p value of tpi_1 for regular unit root and use the p value of Fpi_3:4 for testing seasonal unit root since we have quarterly data. Also, the system has a regular unit root since p-value of tpi_1 is greater than 0.05. Also, it have a seasonal unit root since p-value of Fpi_3:4 is greater than 0.05. 
+\
+\
+
+```{r}
+library(forecast)
+ndiffs(trans)
+nsdiffs(diff((trans)))
+```
+\
+Thus, I need to take one regular and one seasonal difference.
+\
+
+```{r}
+newdata=diff(trans)
+
+```
+\
+```{r}
+out<-HEGY.test(wts=newdata, itsd=c(1,0,0), regvar=0, selectlags=list(mode="signf", Pmax=NULL))
+out$stats
+```
+\
+\
+The differenced system has no regular unit root  since p-value of tpi_1 is less than 0.05 but the differenced system has seasonal unit root  since p-value of Fpi_3:4  is greater than 0.05.
+\
+\
+
+```{r}
+newdata=diff(newdata,4)
+```
+
+
+
+
+```{r}
+out<-HEGY.test(wts=newdata, itsd=c(0,0,0), regvar=0, selectlags=list(mode="signf", Pmax=NULL))
+out$stats
+```
+\
+\
+The differenced system has no regular unit root and seasonal unit root since p-value of tpi_1 and Fpi_3:4 are less than 0.05.
+\
+\
+\
+d)
+\
+```{r}
+
+acf(newdata, na.action = na.pass)
+```
+
+```{r}
+pacf(newdata, na.action = na.pass)
+
+```
+\
+SARIMA(2,1,1)(1,1,0)[4]
+\
+
+
+

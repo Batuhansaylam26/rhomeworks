@@ -1,0 +1,313 @@
+---
+title: "Stat467 Homework1"
+author: "Batuhan SAYLAM ID:2429264        Nebih ŞAHİN ID:2429298"
+date: "2023-11-22"
+output:
+  pdf_document: default
+  word_document: default
+---
+Q1)
+
+```{r}
+#a)
+
+m1 <- matrix(c(2,1,1,5), nrow = 2)
+
+m2 <- matrix(c(5,-2,4,-2,4,1,4,1,7), nrow = 3)
+#determinants
+det(m1)
+det(m2)
+#inverse
+solve(m1)
+solve(m2)
+
+library(expm)
+
+sqrtm(m1)
+sqrtm(m2)
+```
+
+```{r}
+#b)
+e_1 <- eigen(m1)
+e_2 <- eigen(m2)
+
+e_1
+e_2
+
+e1 <- e_1$vectors
+
+e2 <- e_2$vectors
+
+e_l1 <- as.data.frame(e1)
+
+e_m11 <- e_l1[,1]
+e_m12 <- e_l1[,2]
+
+e_l2 <- as.data.frame(e2)
+
+e_m21 <- e_l2[,1]
+e_m22<- e_l2[,2]
+e_m23 <- e_l2[,3]
+
+# the orthogonality of vectors of matrix1 
+
+sum(e_m11 * e_m12)
+
+
+# the orthogonality of vectors of matrix2 
+
+sum(e_m21 * e_m22)
+
+
+sum(e_m21 * e_m23)
+
+
+sum(e_m22 * e_m23)
+```
+
+
+```{r}
+#c)
+
+lambda1 <- diag(e_1$values)
+lambda2 <- diag(e_2$values)
+
+m1r <- e1 %*% lambda1 %*% solve(e1)
+m2r <- e2 %*% lambda2 %*% solve(e2)
+
+
+
+all.equal(m1,m1r)
+
+all.equal(m2,m2r)
+
+```
+
+
+```{r}
+#d)
+
+if (all(eigen(m1, symmetric = TRUE)$values > 0)) {
+  print("The matrix 1 is positive definite.")
+} else {
+  print("The matrix 1 is not positive definite.")
+}
+
+
+
+if (all( eigen(m2, symmetric = TRUE)$values > 0)) {
+  print("The matrix 2 is positive definite.")
+} else {
+  print("The matrix 2 is not positive definite.")
+}
+```
+
+Q2)
+```{r}
+library(dplyr)
+library(tidyverse)
+View(swiss)
+```
+
+
+```{r}
+#a)
+apply(swiss, 2, shapiro.test)
+
+par(mfrow=c(2, 3)) # Arrange plots in a 2x3 grid
+qqnorm(swiss$Fertility, main="Fertility Q-Q Plot")
+qqnorm(swiss$Agriculture, main="Agriculture Q-Q Plot")
+qqnorm(swiss$Examination, main="Examination Q-Q Plot")
+qqnorm(swiss$Education, main="Education Q-Q Plot")
+qqnorm(swiss$Catholic, main="Catholic Q-Q Plot")
+qqnorm(swiss$Infant.Mortality, main="Infant Mortality Q-Q Plot")
+
+
+
+#According to the Shapiro Wilk normality test,
+#except 'education' and 
+#'catholic' variables, the others were normal.
+
+```
+
+
+```{r}
+#b)
+library(AID)
+
+transformed_education <- boxcoxnc(swiss$Education)
+
+transformed_catholic<-boxcoxnc(swiss$Catholic)
+
+transformed_education
+transformed_catholic
+
+
+transformed_data <- swiss
+transformed_data$Education <- transformed_education$tf.data 
+transformed_data$Catholic <- transformed_catholic$tf.data 
+
+
+
+#We transformed the education and
+#catholic variables using the boxcoxnc function.
+#While the transformed data of education are normal,
+#the transformed data
+#of catholic variables are not normal.
+```
+
+```{r}
+#c)
+par(mfrow=c(1, 1))
+distance <- as.matrix(dist(transformed_data))^2
+orders <- sort(distance[lower.tri(distance)], decreasing = TRUE)
+
+x <- nrow(transformed_data)
+y <- ncol(transformed_data)
+
+quantile <- qchisq(ppoints(x * (x - 1)/2), df = y)
+
+plot(quantile, orders, main = "Chi-Square Plot for Multivariate Normality", xlab = "Theoretical Quantiles", ylab = "Ordered Squared Distances")
+
+
+abline(0, 1, col = "indianred3")
+
+
+outlier <-  which(distance > quantile(quantile, 0.99))
+
+without_outlier <- transformed_data[-outlier, ]
+
+mean_real <- colMeans(transformed_data)
+cov_real <- cov(transformed_data)
+
+mean_outlier <- colMeans(without_outlier)
+cov_outlier <- cov(without_outlier)
+
+print("original data:")
+print(mean_real)
+print(cov_real)
+```
+
+
+
+Q3)
+```{r}
+data=read.csv("C://Users//ASUS//Desktop//buddymove+data+set//buddymove_holidayiq.csv")
+data=na.omit(data)
+```
+
+```{r}
+#a)
+colMeans(data[,2:length(data)])
+```
+
+
+```{r}
+var(data[,2:length(data)])
+```
+
+```{r}
+cor(data[,2:length(data)])
+```
+Through the mean vector, variance-covariance matrix, and correlation matrix, these calculations offer statistical insights into the variability and correlations among the variables/features in the buddy_move dataset. While Nature has the highest average, Sports has the lowest average. While Nature has the highest variance, Picnic has the lowest variance. Additionally, the highest correlation is between religious and shopping, while the lowest is between religious and nature. Nature has negative correlation with  religious and shopping.
+
+
+
+
+
+
+
+
+
+
+```{r}
+#b)
+summary(data)
+```
+Nature has the highest the range while sports has the lowest one. Sports has the maximum and minimum values. Religious and Shopping have same median andPicnic and nature have same median. 
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+#c)
+plot(data, main = "Scatter plot")
+```
+An preliminary grasp of the interactions between variables is made easier by this visualization, which may then be used to guide more targeted research or modeling efforts based on patterns found in the data. Religious and Shopping have high positive correlation.
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+#d
+boxplot(data[,2:length(data)])
+```
+
+```{r}
+
+ 
+quartiles <- quantile(data$Nature, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(data$Nature)
+ 
+Lower <- quartiles[1] - 1.5*IQR
+Upper <- quartiles[2] + 1.5*IQR 
+ 
+data2 <- subset(data, data$Nature > Lower & data$Nature < Upper)
+
+
+
+
+quartiles <- quantile(data2$Theatre, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(data2$Theatre)
+ 
+Lower <- quartiles[1] - 1.5*IQR
+Upper <- quartiles[2] + 1.5*IQR 
+ 
+data3 <- subset(data2, data2$Theatre > Lower & data2$Theatre < Upper)
+ 
+
+
+
+
+quartiles <- quantile(data3$Shopping, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(data3$Shopping)
+ 
+Lower <- quartiles[1] - 1.5*IQR
+Upper <- quartiles[2] + 1.5*IQR 
+ 
+data4 <- subset(data3, data3$Shopping > Lower & data3$Shopping < Upper)
+ 
+data4=na.omit(data4)
+
+
+merged_data <- merge(data, data4, by = "User.Id", all = TRUE)
+
+
+merged_data[is.na(merged_data)] <- 0
+
+cor_matrix <- cor(merged_data[,2:length(merged_data)])  
+print(cor_matrix)
+
+
+```
+There exist outliers in shopping, theatre and nature. 
+
+
+
+

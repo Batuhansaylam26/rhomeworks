@@ -1,0 +1,340 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Untitled},
+  pdfauthor={Batuhan SAYLAM},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Untitled}
+\author{Batuhan SAYLAM}
+\date{2023-11-22}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data}\OtherTok{=}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"C://Users//ASUS//Desktop//buddymove+data+set//buddymove\_holidayiq.csv"}\NormalTok{)}
+\NormalTok{data}\OtherTok{=}\FunctionTok{na.omit}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+Q3 a)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colMeans}\NormalTok{(data[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(data)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Sports Religious    Nature   Theatre  Shopping    Picnic 
+##  11.98795 109.77912 124.51807 116.37751 112.63855 120.40161
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{var}\NormalTok{(data[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(data)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Sports Religious    Nature   Theatre  Shopping    Picnic
+## Sports     43.77808  133.8643  183.7119  130.0570  160.5884  172.2549
+## Religious 133.86426 1053.2696 -219.7561  177.2410 1208.1336  638.8834
+## Nature    183.71191 -219.7561 2082.9523  626.0577 -353.0620  777.4564
+## Theatre   130.05699  177.2410  626.0577 1032.5101  243.8749  236.9002
+## Shopping  160.58837 1208.1336 -353.0620  243.8749 1727.4737  599.7909
+## Picnic    172.25486  638.8834  777.4564  236.9002  599.7909 1064.9348
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(data[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(data)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Sports  Religious     Nature   Theatre   Shopping    Picnic
+## Sports    1.0000000  0.6233996  0.6083721 0.6117277  0.5839559 0.7977772
+## Religious 0.6233996  1.0000000 -0.1483650 0.1699602  0.8956523 0.6032403
+## Nature    0.6083721 -0.1483650  1.0000000 0.4269013 -0.1861254 0.5220053
+## Theatre   0.6117277  0.1699602  0.4269013 1.0000000  0.1826057 0.2259211
+## Shopping  0.5839559  0.8956523 -0.1861254 0.1826057  1.0000000 0.4422142
+## Picnic    0.7977772  0.6032403  0.5220053 0.2259211  0.4422142 1.0000000
+\end{verbatim}
+
+Through the mean vector, variance-covariance matrix, and correlation
+matrix, these calculations offer statistical insights into the
+variability and correlations among the variables/features in the
+buddy\_move dataset. While Nature has the highest average, Sports has
+the lowest average. While Nature has the highest variance, Picnic has
+the lowest variance. Additionally, the highest correlation is between
+religious and shopping, while the lowest is between religious and
+nature. Nature has negative correlation with religious and shopping. b)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    User.Id              Sports        Religious         Nature     
+##  Length:249         Min.   : 2.00   Min.   : 50.0   Min.   : 52.0  
+##  Class :character   1st Qu.: 6.00   1st Qu.: 84.0   1st Qu.: 89.0  
+##  Mode  :character   Median :12.00   Median :104.0   Median :119.0  
+##                     Mean   :11.99   Mean   :109.8   Mean   :124.5  
+##                     3rd Qu.:18.00   3rd Qu.:132.0   3rd Qu.:153.0  
+##                     Max.   :25.00   Max.   :203.0   Max.   :318.0  
+##     Theatre         Shopping         Picnic     
+##  Min.   : 59.0   Min.   : 50.0   Min.   : 61.0  
+##  1st Qu.: 93.0   1st Qu.: 79.0   1st Qu.: 92.0  
+##  Median :113.0   Median :104.0   Median :119.0  
+##  Mean   :116.4   Mean   :112.6   Mean   :120.4  
+##  3rd Qu.:138.0   3rd Qu.:138.0   3rd Qu.:143.0  
+##  Max.   :213.0   Max.   :233.0   Max.   :218.0
+\end{verbatim}
+
+Nature has the highest the range while sports has the lowest one. Sports
+has the maximum and minimum values. Religious and Shopping have same
+median andPicnic and nature have same median.\\
+c)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(data, }\AttributeTok{main =} \StringTok{"Scatter plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{467hw_files/figure-latex/unnamed-chunk-6-1.pdf} An
+preliminary grasp of the interactions between variables is made easier
+by this visualization, which may then be used to guide more targeted
+research or modeling efforts based on patterns found in the data.
+Religious and Shopping have high positive correlation.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(data)])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{467hw_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quartiles }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Nature, }\AttributeTok{probs=}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{75}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{IQR }\OtherTok{\textless{}{-}} \FunctionTok{IQR}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Nature)}
+ 
+\NormalTok{Lower }\OtherTok{\textless{}{-}}\NormalTok{ quartiles[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{IQR}
+\NormalTok{Upper }\OtherTok{\textless{}{-}}\NormalTok{ quartiles[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{IQR }
+ 
+\NormalTok{data2 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(data, data}\SpecialCharTok{$}\NormalTok{Nature }\SpecialCharTok{\textgreater{}}\NormalTok{ Lower }\SpecialCharTok{\&}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{Nature }\SpecialCharTok{\textless{}}\NormalTok{ Upper)}
+
+
+
+
+\NormalTok{quartiles }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(data2}\SpecialCharTok{$}\NormalTok{Theatre, }\AttributeTok{probs=}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{75}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{IQR }\OtherTok{\textless{}{-}} \FunctionTok{IQR}\NormalTok{(data2}\SpecialCharTok{$}\NormalTok{Theatre)}
+ 
+\NormalTok{Lower }\OtherTok{\textless{}{-}}\NormalTok{ quartiles[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{IQR}
+\NormalTok{Upper }\OtherTok{\textless{}{-}}\NormalTok{ quartiles[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{IQR }
+ 
+\NormalTok{data3 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(data2, data2}\SpecialCharTok{$}\NormalTok{Theatre }\SpecialCharTok{\textgreater{}}\NormalTok{ Lower }\SpecialCharTok{\&}\NormalTok{ data2}\SpecialCharTok{$}\NormalTok{Theatre }\SpecialCharTok{\textless{}}\NormalTok{ Upper)}
+ 
+
+
+
+
+\NormalTok{quartiles }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(data3}\SpecialCharTok{$}\NormalTok{Shopping, }\AttributeTok{probs=}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{75}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{IQR }\OtherTok{\textless{}{-}} \FunctionTok{IQR}\NormalTok{(data3}\SpecialCharTok{$}\NormalTok{Shopping)}
+ 
+\NormalTok{Lower }\OtherTok{\textless{}{-}}\NormalTok{ quartiles[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{IQR}
+\NormalTok{Upper }\OtherTok{\textless{}{-}}\NormalTok{ quartiles[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{IQR }
+ 
+\NormalTok{data4 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(data3, data3}\SpecialCharTok{$}\NormalTok{Shopping }\SpecialCharTok{\textgreater{}}\NormalTok{ Lower }\SpecialCharTok{\&}\NormalTok{ data3}\SpecialCharTok{$}\NormalTok{Shopping }\SpecialCharTok{\textless{}}\NormalTok{ Upper)}
+ 
+\NormalTok{data4}\OtherTok{=}\FunctionTok{na.omit}\NormalTok{(data4)}
+
+
+\NormalTok{merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(data, data4, }\AttributeTok{by =} \StringTok{"User.Id"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+
+
+\NormalTok{merged\_data[}\FunctionTok{is.na}\NormalTok{(merged\_data)] }\OtherTok{\textless{}{-}} \DecValTok{0}
+
+\NormalTok{cor\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(merged\_data[,}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(merged\_data)])  }
+\FunctionTok{print}\NormalTok{(cor\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Sports.x Religious.x   Nature.x  Theatre.x Shopping.x  Picnic.x
+## Sports.x    1.0000000  0.62339962  0.6083721 0.61172773  0.5839559 0.7977772
+## Religious.x 0.6233996  1.00000000 -0.1483650 0.16996019  0.8956523 0.6032403
+## Nature.x    0.6083721 -0.14836500  1.0000000 0.42690134 -0.1861254 0.5220053
+## Theatre.x   0.6117277  0.16996019  0.4269013 1.00000000  0.1826057 0.2259211
+## Shopping.x  0.5839559  0.89565233 -0.1861254 0.18260566  1.0000000 0.4422142
+## Picnic.x    0.7977772  0.60324028  0.5220053 0.22592107  0.4422142 1.0000000
+## Sports.y    0.8646899  0.53021727  0.5473559 0.50137220  0.4834564 0.7341104
+## Religious.y 0.4087738  0.78650534 -0.1807232 0.02700945  0.6757682 0.4789118
+## Nature.y    0.4555672 -0.20744181  0.8369329 0.31582407 -0.2287282 0.4270818
+## Theatre.y   0.3930705  0.04935358  0.3357223 0.70265222  0.0444637 0.1510766
+## Shopping.y  0.4158893  0.73922120 -0.1950564 0.05501457  0.8111230 0.3665246
+## Picnic.y    0.5520098  0.43013065  0.3797891 0.08443905  0.2835589 0.8050274
+##              Sports.y Religious.y    Nature.y  Theatre.y  Shopping.y   Picnic.y
+## Sports.x    0.8646899  0.40877377  0.45556725 0.39307046  0.41588932 0.55200982
+## Religious.x 0.5302173  0.78650534 -0.20744181 0.04935358  0.73922120 0.43013065
+## Nature.x    0.5473559 -0.18072323  0.83693295 0.33572229 -0.19505640 0.37978911
+## Theatre.x   0.5013722  0.02700945  0.31582407 0.70265222  0.05501457 0.08443905
+## Shopping.x  0.4834564  0.67576817 -0.22872822 0.04446370  0.81112303 0.28355892
+## Picnic.x    0.7341104  0.47891178  0.42708175 0.15107656  0.36652457 0.80502741
+## Sports.y    1.0000000  0.64728470  0.65903316 0.65080779  0.61682235 0.80501923
+## Religious.y 0.6472847  1.00000000  0.05926586 0.35622808  0.91220822 0.69595821
+## Nature.y    0.6590332  0.05926586  1.00000000 0.57220082  0.00930624 0.61063137
+## Theatre.y   0.6508078  0.35622808  0.57220082 1.00000000  0.33009921 0.42971520
+## Shopping.y  0.6168223  0.91220822  0.00930624 0.33009921  1.00000000 0.55427697
+## Picnic.y    0.8050192  0.69595821  0.61063137 0.42971520  0.55427697 1.00000000
+\end{verbatim}
+
+There exist outliers in shopping, theatre and nature.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  How does the distribution of travel categories ( `Nature', `Religious'
+  and `Sports') vary among different participants in the BuddyMove
+  dataset?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Zorunlu paket yükleniyor: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggparcoord}\NormalTok{(data, }\AttributeTok{columns =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{), }\AttributeTok{groupColumn =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{467hw_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\end{document}

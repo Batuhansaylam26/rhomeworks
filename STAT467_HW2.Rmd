@@ -1,0 +1,94 @@
+---
+title: "Untitled"
+author: "Batuhan SAYLAM"
+date: "2023-12-18"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+Computational Part\
+Q1)\
+a)\
+
+
+H_0: There is no significant difference in the mean scores for the subjects between males and females.\
+
+H_1: At least one of them differs.\
+b)\
+```{r}
+
+library(readxl)
+library(ICSNP)
+
+data <- read_excel("C:/Users/ASUS/Desktop/gender_test_scores.xlsx")
+
+data[,"GENDER"]=as.factor(data$GENDER)
+
+
+
+
+
+```
+
+
+
+
+
+```{r}
+# Perform Hotelling's T-squared test
+HotellingsT2(cbind(data$MATH,data$ENG,data$HIST)~data$GENDER)
+
+
+
+```
+\
+Since the p-value is greater than 0.05, we cannot reject null hypthesis. Hence, there is no significant difference between males and females.\
+\
+c)\
+
+```{r}
+pairs(data[data[,"GENDER"]==0,c("MATH","ENG","HIST")], main= "Scatterplot of Males")
+
+pairs(data[data[,"GENDER"]==1,c("MATH","ENG","HIST")], main= "Scatterplot of Females")
+```
+
+
+
+
+
+Q2)\
+
+```{r}
+data <- data.frame(
+  Diet = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+           1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+           2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3),
+  Gender = c(2, 1, 2, 2, 2, 1, 1, 1, 2, 1,
+             1, 2, 2, 1, 1, 1, 2, 2, 2, 2,
+             1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 1),
+  Age = c(61, 69, 62, 66, 63, 79, 76, 54, 62, 46,
+          57, 59, 74, 74, 66, 52, 48, 64, 70, 77,
+          71, 39, 70, 70, 55, 74, 69, 73, 76, 58, 49),
+  Cholesterol_Levels = c(124, 42, 25, 45, 412, 51, 1112, 46, 103, 146,
+                         340, 396, 81, 461, 20, 450, 246, 166, 63, 64,
+                         155, 151, 166, 37, 223, 138, 72, 245, 248, 377, 189),
+  Sugar_Levels = c(264, 62, 149, 18, 180, 142, 35, 299, 85, 361,
+                   269, 130, 72, 134, 84, 98, 48, 142, 113, 90,
+                   30, 260, 116, 87, 69, 100, 315, 188, 292, 492, 462),
+  Blood_Pressure = c(124, 12, 19, 45, 257, 23, 128, 46, 90, 123,
+                     310, 359, 74, 423, 16, 450, 87, 115, 50, 50,
+                     113, 38, 156, 27, 218, 138, 39, 231, 135, 50, 189),
+  Weight = c(38, 18, 36, 12, 64, 20, 13, 51, 10, 52,
+             28, 55, 33, 18, 20, 58, 13, 49, 38, 24, 
+             18, 34, 20, 27, 32, 27, 39, 65, 18, 30, 65)
+)
+
+data[,"Gender"]=as.factor(data[,"Gender"])
+data[,"Diet"]=as.factor(data[,"Diet"])
+mm=manova(cbind(Cholesterol_Levels,Sugar_Levels,Blood_Pressure,Weight)~Diet*Gender*Age,data=data)
+
+summary(mm)
+```
+
+

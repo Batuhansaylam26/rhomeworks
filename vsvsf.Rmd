@@ -1,0 +1,227 @@
+---
+title: "Untitled"
+author: "Batuhan SAYLAM"
+date: "2023-12-17"
+output: html_document
+---
+
+```{r}
+#Question 2:
+
+data <- data.frame(
+  Diet = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+           1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+           2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3),
+  Gender = c(2, 1, 2, 2, 2, 1, 1, 1, 2, 1,
+             1, 2, 2, 1, 1, 1, 2, 2, 2, 2,
+             1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 1),
+  Age = c(61, 69, 62, 66, 63, 79, 76, 54, 62, 46,
+          57, 59, 74, 74, 66, 52, 48, 64, 70, 77,
+          71, 39, 70, 70, 55, 74, 69, 73, 76, 58, 49),
+  Cholesterol_Levels = c(124, 42, 25, 45, 412, 51, 1112, 46, 103, 146,
+                         340, 396, 81, 461, 20, 450, 246, 166, 63, 64,
+                         155, 151, 166, 37, 223, 138, 72, 245, 248, 377, 189),
+  Sugar_Levels = c(264, 62, 149, 18, 180, 142, 35, 299, 85, 361,
+                   269, 130, 72, 134, 84, 98, 48, 142, 113, 90,
+                   30, 260, 116, 87, 69, 100, 315, 188, 292, 492, 462),
+  Blood_Pressure = c(124, 12, 19, 45, 257, 23, 128, 46, 90, 123,
+                     310, 359, 74, 423, 16, 450, 87, 115, 50, 50,
+                     113, 38, 156, 27, 218, 138, 39, 231, 135, 50, 189),
+  Weight = c(38, 18, 36, 12, 64, 20, 13, 51, 10, 52,
+             28, 55, 33, 18, 20, 58, 13, 49, 38, 24, 
+             18, 34, 20, 27, 32, 27, 39, 65, 18, 30, 65)
+)
+
+#Part A:
+
+# Separate data by diet type
+diet_1 <- subset(data, Diet == 1)
+diet_2 <- subset(data, Diet == 2)
+diet_3 <- subset(data, Diet == 3)
+
+# Calculate mean vectors for each diet type
+mean_diet_1 <- colMeans(diet_1[, -c(1, 2)])
+mean_diet_2 <- colMeans(diet_2[, -c(1, 2)])
+mean_diet_3 <- colMeans(diet_3[, -c(1, 2)])
+
+
+# Within-group variance-covariance matrices
+W_1 <- var(diet_1[, -c(1, 2)])
+W_2 <- var(diet_2[, -c(1, 2)])
+W_3 <- var(diet_3[, -c(1, 2)])
+
+# Pooled within-group variance-covariance matrix
+n_1 <- nrow(diet_1)
+n_2 <- nrow(diet_2)
+n_3 <- nrow(diet_3)
+
+W_pooled <- ((n_1 - 1) * W_1 + (n_2 - 1) * W_2 + (n_3 - 1) * W_3) 
+
+# Between-group variance-covariance matrix
+B <- (n_1 * (mean_diet_1 - colMeans(data[, -c(1, 2)]))) %*% t(mean_diet_1 - colMeans(data[, -c(1, 2)]))
+B <- B + (n_2 * (mean_diet_2 - colMeans(data[, -c(1, 2)]))) %*% t(mean_diet_2 - colMeans(data[, -c(1, 2)]))
+B <- B + (n_3 * (mean_diet_3 - colMeans(data[, -c(1, 2)]))) %*% t(mean_diet_3 - colMeans(data[, -c(1, 2)]))
+
+# Test statistic: Wilks' Lambda
+lambda <- det(W_pooled) / det(W_pooled + B)
+
+# Degrees of freedom
+df1 <- (5 - 1)
+df2 <- 31 - 5
+
+# Calculate F-statistic
+F_stat <- ((1 - lambda) / lambda) * (df2 / df1)
+
+# Critical F-value at alpha = 0.05
+critical_F <- qf(1 - 0.05, df1, df2)
+
+# Compare F-statistic with critical F-value
+if (F_stat > critical_F) {
+  print("Reject null hypothesis: There are differences between diet types.")
+} else {
+  print("Fail to reject null hypothesis: No significant differences between diet types.")
+}
+```
+```{r}
+mean_diet_1 
+mean_diet_2 
+mean_diet_3
+(mean_diet_1*12+mean_diet_2*11+mean_diet_3*8)/31
+
+W_1
+W_2
+W_3
+
+n_1
+n_2
+n_3
+W_pooled
+B
+
+
+lambda
+
+F_stat
+critical_F
+```
+
+```{r}
+data$Type_of_Diet <- as.factor(data$Diet)
+data$Gender <- as.factor(data$Gender)
+response_variables <- c("Age", "Cholesterol_Levels", "Sugar_Levels",
+"Blood_Pressure", "Weight")
+X <- model.matrix(~ Type_of_Diet + Gender, data)
+Y <- as.matrix(data[, response_variables])
+B <- solve(t(X) %*% X) %*% t(X) %*% Y
+E <- Y - X %*% B
+S_total <- cov(Y)
+S_residual <- cov(E)
+numerator <- sum(diag(S_residual %*% solve(S_total + S_residual)))
+denominator <- sum(diag(S_residual %*% solve(S_total) %*% S_residual))
+pillai_statistic <- numerator / denominator
+df_between <- length(unique(data$Type_of_Diet)) - 1
+df_residual <- nrow(data) - ncol(X)
+test_statistic <- (df_between * (nrow(data) -
+length(unique(data$Type_of_Diet)) * (length(response_variables) + 1) -
+df_residual) * pillai_statistic) / (nrow(data) - df_residual - 1)
+p_value <- 1 - pf(test_statistic, df_between, nrow(data) - df_residual - 1)
+alpha <- 0.05
+cat("Pillai's Trace Statistic:", pillai_statistic,"\n")
+```
+```{r}
+data <- data.frame(
+  Body_Length = c(191, 195, 181, 183, 176, 208, 189, 197, 188, 192, 179, 183, 174, 190, 188, 163, 195, 186, 181, 175, 192, 174, 176, 197, 190),
+  Body_Breadth = c(155, 149, 148, 153, 144, 157, 150, 159, 152, 150, 158, 147, 150, 159, 151, 137, 155, 153, 145, 140, 154, 143, 139, 167, 163),
+  Cephalic_Length = c(179, 201, 185, 188, 171, 192, 190, 189, 197, 187, 186, 174, 185, 195, 187, 161, 183, 173, 182, 165, 185, 178, 176, 200, 187),
+  Cephalic_Breadth = c(145, 152, 149, 149, 142, 152, 149, 152, 159, 151, 148, 147, 152, 157, 158, 130, 158, 148, 146, 137, 152, 147, 143, 158, 150)
+)
+
+# Create design matrix
+X <- cbind(rep(1, nrow(data)), data$Cephalic_Length, data$Cephalic_Breadth)
+Y <- cbind(data$Body_Length, data$Body_Breadth)
+
+# Calculate least squares estimates
+B_hat <- solve(t(X) %*% X) %*% t(X) %*% Y
+
+# Print least squares estimates
+cat("Least Squares Estimates (B_hat):\n")
+print(B_hat)
+```
+
+```{r}
+(t(Y-X[,-c(2)]%*%B_hat[-c(2),])%*%(Y-X[,-c(2)]%*%B_hat[-c(2),]))/25
+det((t(Y-X[,-c(2)]%*%B_hat[-c(2),])%*%(Y-X[,-c(2)]%*%B_hat[-c(2),]))/25)
+(t(Y-X%*%B_hat)%*%(Y-X%*%B_hat))/25
+det((t(Y-X%*%B_hat)%*%(Y-X%*%B_hat))/25)
+
+-2*log((det((t(Y-X%*%B_hat)%*%(Y-X%*%B_hat))/25)/det((t(Y-X[,-c(2)]%*%B_hat[-c(2),])%*%(Y-X[,-c(2)]%*%B_hat[-c(2),]))/25))^(25/2))
+```
+
+
+
+
+```{r}
+model_body_length <- lm(Body_Length ~ Cephalic_Length, data = data)
+
+# Simple linear regression for Body Breadth against Cephalic Length
+model_body_breadth <- lm(Body_Breadth ~ Cephalic_Length, data = data)
+
+# Print summaries of the regression models
+summary(model_body_length)
+summary(model_body_breadth)
+```
+
+```{r}
+data_product_A <- data.frame(
+  Quality = c(15, 17, 15, 13, 20, 15, 15, 13, 14, 17, 17, 17, 15, 18, 18, 15, 18, 10, 18, 18, 13, 16, 11, 16, 16, 18, 16, 15, 18, 18, 17),
+  Price = c(17, 15, 14, 12, 17, 21, 13, 5, 7, 15, 17, 20, 15, 19, 18, 14, 17, 14, 21, 21, 17, 15, 15, 19, 18, 17, 20, 16, 19, 16, 20),
+  Durability = c(24, 32, 29, 10, 26, 26, 26, 22, 30, 30, 26, 28, 29, 32, 31, 26, 33, 19, 30, 34, 30, 16, 25, 26, 23, 26, 28, 29, 32, 33, 21),
+  Design = c(14, 26, 23, 16, 28, 21, 22, 22, 17, 27, 20, 24, 24, 28, 27, 21, 26, 17, 23, 26, 24, 21, 23, 16, 21, 26, 23, 28, 23, 18, 28)
+)
+
+data_product_B <- data.frame(
+  Quality = c(13, 14, 12, 10, 11, 12, 10, 10, 12, 11, 12, 14, 14, 13, 14, 13, 16, 14, 16, 13, 2, 14, 17, 16, 15, 12, 14, 13, 14, 7, 12, 6),
+  Price = c(14, 12, 14, 19, 20, 9, 13, 8, 20, 10, 18, 10, 16, 8, 13, 16, 21, 17, 16, 16, 6, 16, 17, 13, 14, 10, 17, 15, 16, 7, 15, 5),
+  Durability = c(12, 14, 21, 10, 16, 14, 18, 13, 19, 11, 25, 23, 25, 23, 16, 23, 26, 14, 15, 23, 16, 22, 22, 16, 20, 12, 24, 18, 18, 19, 7, 6),
+  Design = c(21, 26, 21, 16, 16, 18, 24, 23, 23, 27, 26, 14, 28, 25, 25, 28, 26, 14, 23, 24, 21, 26, 28, 14, 26, 9, 23, 20, 28, 18, 28, 13)
+)
+
+standardize <- function(x) {
+  return((x - mean(x)) / sd(x))
+}
+
+data_product_A_standardized <- apply(data_product_A, 2, standardize)
+data_product_B_standardized <- apply(data_product_B, 2, standardize)
+
+# Compute covariance matrices
+cov_matrix_A <- cov(data_product_A_standardized)
+cov_matrix_B <- cov(data_product_B_standardized)
+
+# Perform PCA
+pca_A <- eigen(cov_matrix_A)
+pca_B <- eigen(cov_matrix_B)
+
+# Proportion of variance explained by each principal component
+prop_var_A <- pca_A$values / sum(pca_A$values)
+prop_var_B <- pca_B$values / sum(pca_B$values)
+
+# Print results
+cat("Covariance Matrix for Product A:\n")
+print(cov_matrix_A)
+
+cat("\nEigenvalues and Eigenvectors for Product A:\n")
+print(pca_A)
+
+cat("\nProportion of Variance Explained by Each Principal Component for Product A:\n")
+print(prop_var_A)
+
+cat("\nCovariance Matrix for Product B:\n")
+print(cov_matrix_B)
+
+cat("\nEigenvalues and Eigenvectors for Product B:\n")
+print(pca_B)
+
+cat("\nProportion of Variance Explained by Each Principal Component for Product B:\n")
+print(prop_var_B)
+```
+
